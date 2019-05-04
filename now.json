@@ -1,0 +1,32 @@
+{
+  "version": 2,
+  "name": "my-react-app",
+  "builds": [
+    {
+      "src": "front/package.json",
+      "use": "@now/static-build",
+      "config": { "distDir": "front/build" }
+    }
+  ],
+  "routes": [
+    {
+      "src": "/static/(.*)",
+      "headers": { "cache-control": "s-maxage=31536000,immutable" },
+      "dest": "/front/static/$1"
+    },
+    { "src": "/favicon.ico", "dest": "/front/favicon.ico" },
+    { "src": "/asset-manifest.json", "dest": "/front/asset-manifest.json" },
+    { "src": "/manifest.json", "dest": "/front/manifest.json" },
+    { "src": "/precache-manifest.(.*)", "dest": "/front/precache-manifest.$1" },
+    {
+      "src": "/front/service-worker.js",
+      "headers": { "cache-control": "s-maxage=0" },
+      "dest": "/front/service-worker.js"
+    },
+    {
+      "src": "/(.*)",
+      "headers": { "cache-control": "s-maxage=0" },
+      "dest": "/front/index.html"
+    }
+  ]
+}
